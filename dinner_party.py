@@ -453,7 +453,11 @@ class RandomRestartHillClimbing(LocalSearch):
 
 class LocalBeamSearch(LocalSearch):
 
-  def __init__(self, problem, k=10, method="local search", max_iter=1000):
+  def __init__(self, 
+               problem, 
+               k=10, 
+               method="local search", 
+               max_iter=1000):
     super().__init__(problem, method=method, max_iter=max_iter)
     self.k = k
     self.nodes = self.__init_nodes()
@@ -461,7 +465,7 @@ class LocalBeamSearch(LocalSearch):
     assert self.nodes
     self.max_node = self.nodes[0]
     self.max_score = self.max_node.score
-    
+
   def __init_nodes(self):
     nodes = []
     i = 0
@@ -502,7 +506,7 @@ class LocalBeamSearch(LocalSearch):
     self.successor_lists.append(successors)
     lock.release()
 
-  def __successor_selection(self, method, forced_stochastic=False):
+  def __successor_selection(self, method):
     tmp = None
     merged = []
     for s in heapq.merge(*tuple(self.successor_lists), reverse=True):
@@ -533,7 +537,7 @@ class LocalBeamSearch(LocalSearch):
   def __stochastic_selection(self, successors):
     weights = []
     selected_nodes = []
-    s = int(self.k/4)
+    s = int(self.k/2)
     f = 6 * s + len(successors)
     weights += [5/f for _ in range(0, s)]
     weights += [2/f for _ in range(s, 3*s)]
