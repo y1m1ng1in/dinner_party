@@ -250,7 +250,7 @@ class State:
         return False
 
   def __hash__(self):
-    if self.method == "heuritic":
+    if self.method == "heuristic":
       return hash((tuple(map(tuple, self.table)), tuple(self.wait_list)))
     elif self.method == "local search":
       return hash((tuple(map(tuple, self.table))))
